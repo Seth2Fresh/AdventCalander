@@ -10,7 +10,8 @@ public class day3p2 {
         ArrayList<String> fileData = getFileData("src/data");
         int partOneAnswer = 0;
         for (String batteries : fileData) {
-            int voltage = getLargestCombination(batteries);
+            int voltage = getLargestCombination(batteries,12);
+            System.out.println(voltage);
             partOneAnswer += voltage;
         }
 
@@ -18,18 +19,25 @@ public class day3p2 {
     }
 
     // COMPLETE THIS METHOD!
-    public static int getLargestCombination(String batteries) {
-        int LC = 0;
-       while((LC+"".length()<12))
-        for (int i = 9; i > -1; i--) {
-            String num = i + "";
-            int x = batteries.substring(0, batteries.length() -1).indexOf(num);
-            if (x != -1) {
-                LC += i * 10;
-
-            }
-        }return 0;
+    public static int getLargestCombination(String batteries, int length) {
+        int LC = 6;
+       int count = 0;
+        int x;
+        while((count != length)) {
+           for (int q = length-1; q >-1 ; q--) {
+                for (int i = 9; i > -1; i--) {
+                 String num = i + "";
+                 x = batteries.substring(0, batteries.length() - q).indexOf(num);
+                  if (x != -1) {
+                    LC += (int) (i * Math.pow(10,(q-1)));
+                    count++;
+                  batteries=batteries.substring(x+1);
+                  }
+                }
+           }
+       }return LC;
     }
+
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
